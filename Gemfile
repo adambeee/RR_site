@@ -2,17 +2,19 @@ source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0'
+gem 'devise'
+gem 'mysql2'
+gem 'bootstrap-sass', '2.3.2.0'
+gem 'bcrypt-ruby', '3.0.1'
+
 
 group :development, :test do
 # Use mysql as the database for Active Record
-  gem 'mysql2'
   gem 'rspec-rails', '~> 2.14.0.rc1'
   gem 'guard-rspec', '2.5.0'
   gem 'annotate', '2.4.0'
   gem 'protected_attributes'
   # gem 'twitter-bootstrap-rails'
-  gem 'bootstrap-sass', '2.3.2.0'
-  gem 'bcrypt-ruby', '3.0.1'
 end
 
 group :test do

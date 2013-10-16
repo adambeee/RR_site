@@ -15,6 +15,12 @@
 class User < ActiveRecord::Base #ActiveRecord is what Rails use to talk to a Database.
   # This sets it so the user can only edit their name and email.
   # Will not allow id, created_at and update_at to be modified in any way.
+
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable
+ 
   attr_accessible :name, :email
 
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i # This expression is from rubular.com
