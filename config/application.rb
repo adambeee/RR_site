@@ -8,7 +8,7 @@ Bundler.require(:default, Rails.env)
 
 module RRProject
   class Application < Rails::Application
-    config.active_record.whitelist_attributes = false
+    config.active_record.whitelist_attributes = false # THis fixes the mass assignment issue with Rails 4 and devise.
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
