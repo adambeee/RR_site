@@ -14,6 +14,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 2.14.0.rc1'
   gem 'guard-rspec', '2.5.0'
   gem 'annotate', '2.4.0'
+  gem 'factory_girl_rails', '4.2.1'
   # gem 'twitter-bootstrap-rails'
 end
 
