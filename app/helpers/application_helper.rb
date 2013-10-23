@@ -1,5 +1,6 @@
 module ApplicationHelper
 
+  # Don't believe I need this page anymore!!!!
   #Return a title on a per-page basis...
   def title
     base_title = "RR Project - Coming Soon!!!"
