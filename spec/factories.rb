@@ -1,8 +1,8 @@
 FactoryGirl.define do
   factory :user do
-# By passing the symbol :user to the factory command, I tell Factory Girl that the subsequent definition is for a User model object.
+  # By passing the symbol :user to the factory command, we tell Factory Girl that the subsequent definition is for a User model object.
     name     "Ariel Figueroa"
-    email    "ariel@example.com"
+    email    "figgyscode@me.com"
     password "figgy181"
     password_confirmation "figgy181"
   end

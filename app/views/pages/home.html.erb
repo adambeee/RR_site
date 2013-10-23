@@ -1,7 +1,12 @@
-<h1>Home Page</h1>
-<p>
-  This will be the RR Home Page.
-</p>
+<h2>Home Page</h2>
+    <p>
+        <%= link_to image_tag("RRMockLogo.png", alt: "Rio Runner") %>
+    </p>
 
-<%= link_to "Join Up!", signup_path, :class => "signup_button round"  %>
+<div class="center hero-unit">
+  <h3>Welcome to the Future site for Rio Runner!</h3>
 
+  <h2>
+   <%= link_to "Join Up!", signup_path, class: "btn btn-large btn-primary"  %>
+  </h2>
+ </div>
