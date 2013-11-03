@@ -1,6 +1,5 @@
 require 'spec_helper'
 
-=begin
 describe "Users pages" do
 
   subject {page}
@@ -51,4 +50,3 @@ describe "Users pages" do
       end
     end
 end
-=end

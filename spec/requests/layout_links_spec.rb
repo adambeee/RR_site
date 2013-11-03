@@ -75,4 +75,4 @@ end
     response.should have_selector('a[href="/"]>img')
   end
 =end
-end
+

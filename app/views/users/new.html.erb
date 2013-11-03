@@ -6,12 +6,12 @@
   <div class="span6 offset3">
 <!--  The presence of the do keyword indicates that form_for takes a block with one variable, which we’ve called f for “form”: -->
     <%= form_for(@user) do |f| %>
-<!-- As is usually the case with Rails helpers, we don’t need to know any details about the implementation, but what we do need to know is what the f object does: when called with a method corresponding to an HTML form element—such as a text field, radio button, or password field—it returns code for that element specifically designed to set an attribute of the @user object. In other words, creates the HTML needed to make a labeled text field element appropriate for setting the name attribute of a User model. -->
-
-      <%= f.label :firstname, 'First Name' %>
-      <%= f.text_field :name %>
-
-      <%= f.label :lastname, 'Last Name' %>
+      <%= render 'users/shared/error_messages' %>
+<!-- As is usually the case with Rails helpers, we don’t need to know any details about the implementation,
+but what we do need to know is what the f object does: when called with a method corresponding to an HTML form element—such as a text field,
+radio button, or password field—it returns code for that element specifically designed to set an attribute of the @user object.
+In other words, creates the HTML needed to make a labeled text field element appropriate for setting the name attribute of a User model. -->
+      <%= f.label :name, "Name" %>
       <%= f.text_field :name %>
 
       <%= f.label :email %>
