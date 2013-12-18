@@ -5,7 +5,8 @@
     <section>
       <h1>
         <%= gravatar_for @user %> <!--This will pull the users gravatar using their email address...users_helper.rb-->
-        <%= @user.name %> <!--What happens to this line when I change name to firstname & lastname?-->
+        <%= @user.first_name %> <!--What happens to this line when I change name to firstname & lastname?-->
+        <%= @user.about_me %>
       </h1>
     </section>
   </aside>

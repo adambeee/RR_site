@@ -1,9 +1,13 @@
-<footer>
-  <nav class="round">
-    <ul>
+<footer class ="container">
+  <nav class="row">
+    <ul class ="col-sm-12">
       <li><%= link_to "About", about_path %></li>
       <li><%= link_to "Contact", contact_path %></li>
-      <li><%= link_to "Test", 'https://www.figgyscode.com' %></li>
+      <li><%= link_to "Test", 'http://www.figgyscode.com' %></li>
+      <% if user_signed_in? %>
+      <li><%= link_to "My Rio Runner", riorunner_path %></li>
+      <% end %>
+
     </ul>
   </nav>
 </footer>

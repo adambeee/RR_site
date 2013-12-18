@@ -4,7 +4,9 @@ source 'https://rubygems.org'
 gem 'rails', '4.0.0'
 gem 'devise'
 gem 'mysql2'
-gem 'bootstrap-sass', '2.3.2.0'
+#gem 'bootstrap-sass', '2.3.2.0'
+#not using bootstrap anymore but foundation!
+gem 'foundation-rails'
 gem 'bcrypt-ruby', '3.0.1'
 gem 'protected_attributes'
 
@@ -55,7 +57,7 @@ group :doc do
 end
 
 group :production do
-  gem 'pg', '0.15.1'
+  # gem 'pg', '0.15.1'
   gem 'rails_12factor', '0.0.2'
 end
 

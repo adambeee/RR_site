@@ -4,7 +4,7 @@ class UsersController < ApplicationController
  #   @title = "Sign Up"
  # end
 
-# to get our form to render, we must define an @user variable in the controller action corresponding to new.html.erb, 
+# to get our form to render, we must define an @user variable in the controller action corresponding to new.html.erb,
 # i.e., the new action in the Users controller.
 
   def new
@@ -17,20 +17,20 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
-# Introduce an if-else branching structure, which allows me to handle the cases of failure and success separately based 
+# Introduce an if-else branching structure, which allows me to handle the cases of failure and success separately based
 # on the value of @user.save, which is either true or false depending on whether the save succeeds.
    def create
     @user = User.new(params[:user]) # Not the final implementation!
     if @user.save
-      # Handle a successful save.
+      @user.save
     else
-      render 'new'
+      #render 'new'
     end
    end
-   
+
    private
 
-   def user_pramas
-   	params.require(:user).permit(:name, :email, :password, :password_confirmation)
+   def user_params
+   	params.require(:user).permit(:name, :first_name, :last_name, :email, :password, :password_confirmation, :about_me)
    end
 end

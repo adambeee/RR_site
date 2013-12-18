@@ -9,6 +9,9 @@ RRProject::Application.routes.draw do
   get '/about', :to => 'pages#about'
   get '/help', :to => 'pages#help'
   get '/signup', :to => 'users#new'
+  get 'riorunner', :to => 'pages#riorunner'
+  get '/users/sign_up', :to => 'devise/registrations#new'
+
 
 
   # You can have the root of your site routed with "root"
