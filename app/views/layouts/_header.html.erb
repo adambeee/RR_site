@@ -1,29 +1,31 @@
-<header class="navbar navbar-fixed-top navbar-inverse">
-  <div class="navbar-inner">
-    <div class="container-fluid">
-      <%= link_to "Rio Runner", root_path, class: "navbar-brand",  id: "logo" %>
-        <ul class="nav nav-tabs pull-right">
+<div class ="fixed sticky">
+<nav class="top-bar" data-topbar>
+        <ul class="title-area">
+          <li class="name"><h1><%=link_to "Rio Runner", root_path %></h1></li>
+          <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+        </ul>
+
+        <section class ="top-bar-section">
+        <ul class ="right">
+
           <% if user_signed_in? %>
-          <li class ="dropdown"><%= link_to current_user.first_name, riorunner_path%></li> <!--dropdown javascript bootstrap plugin, when we get there-->
+          <li class="has-dropdown">
+            <%= link_to current_user.first_name, riorunner_path%>
+            <ul class="dropdown">
+              <li> <%= link_to('Logout', destroy_user_session_path, :method => :delete) %></li>
+              <li><%= link_to('My Account', edit_user_registration_path) %></li>
+              <li><a href="#">first link in dropdown</a></li>
+              <li><a href="#">second link in dropdown</a></li>
+              <li><a href="#">third link in dropdown</a></li>
+            </ul>
+          </li>
+          <% else %>
+              <li><%= link_to('Login', new_user_session_path)%> </li>
+              <li><%= link_to('Register', new_user_registration_path)  %> </li>
           <%end%>
           <li><%= link_to "Home", root_path %></li>
           <li><%= link_to "Help", help_path %></li>
-          <% if user_signed_in? %>
-              <li> <%= link_to('Logout', destroy_user_session_path, :method => :delete) %></li>
-          <% else %>
-              <li><%= link_to('Login', new_user_session_path)%> </li>
-          <% end %>
-          <% if user_signed_in? %>
-              <li>
-                <%= link_to('My Account', edit_user_registration_path) %>
-              </li>
-          <% else %>
-              <li>
-                <%= link_to('Register', new_user_registration_path)  %>
-              </li>
-          <% end %>
         </ul>
-      </nav>
-    </div>
-  </div>
-</header>
+        </section>
+</nav>
+</div>

@@ -22,7 +22,7 @@ class UsersController < ApplicationController
    def create
     @user = User.new(params[:user]) # Not the final implementation!
     if @user.save
-      @user.save
+      flash[:success] = "User Created Successfully"
     else
       #render 'new'
     end

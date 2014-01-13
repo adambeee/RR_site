@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-
 </head>
 <body>
 <div class ="container-fluid">
@@ -11,8 +10,6 @@
         <h1>Hello, <%=current_user.first_name %>!</h1>
         <h1>Phone: <%=current_user.phone %></h1>
         <h1>Last: <%=current_user.last_name %></h1>
-
-
     <% end %>
     </div>
 </header>
@@ -20,6 +17,7 @@
     <p class ="col-xs-6">Hello, this is some text!! Hello, this is some text!! Hello, this is some text!! Hello, this is some text!!
       Hello, this is some text!!Hello, this is some text!!Hello, this is some text!!Hello, this is some text!!Hello, this is some text!!</p>
   </div>
+ <%= link_to 'Post a Task', new_task_url%>
 </div>
 </body>
 </html>

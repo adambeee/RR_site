@@ -3,6 +3,7 @@ RRProject::Application.routes.draw do
   devise_for :users
   devise_for :admins
   resources :users
+  resources :tasks
   root 'pages#home'
 
   get '/contact', :to => 'pages#contact'
@@ -11,6 +12,7 @@ RRProject::Application.routes.draw do
   get '/signup', :to => 'users#new'
   get 'riorunner', :to => 'pages#riorunner'
   get '/users/sign_up', :to => 'devise/registrations#new'
+  get '/posttask', :to => 'pages#posttask'
 
 
 

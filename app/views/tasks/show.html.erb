@@ -1,12 +1,11 @@
-<% provide(:title, @user.name) %>
+<% provide(:title, @task.description) %>
 <!--classes row and span4 are apart of bootstrap-->
 <div class="row">
   <aside class="span4">
     <section>
       <h1>
-        <%= gravatar_for @user %> <!--This will pull the users gravatar using their email address...users_helper.rb-->
-        <%= @user.first_name %> <!--What happens to this line when I change name to firstname & lastname?-->
-        <%= @user.about_me %>
+        <%= @task.description %> <!--What happens to this line when I change name to firstname & lastname?-->
+
       </h1>
     </section>
   </aside>
