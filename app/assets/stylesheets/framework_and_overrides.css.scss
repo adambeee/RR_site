@@ -44,4 +44,29 @@ section {
   margin-top: 20px;
   }
 
-body { padding-top:25px; }
+body {
+  padding-top:25px;
+  color: #414042;
+  background: #fff;
+  font-family: "Helvetica Neue", sans-serif;
+  font-weight:150;
+
+}
+
+html,.row, main {
+  background: #fff;
+}
+.navbar {
+  padding-right: 10px;
+}
+.navbar-inverse {
+  background: rgba(0,0,0,.9);
+}
+
+.dropdown-menu {
+  background: rgba(0,0,0,.9);
+}
+
+.dropdown-menu > li > a {
+  color: #fff;
+}
