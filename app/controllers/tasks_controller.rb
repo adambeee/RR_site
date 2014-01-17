@@ -25,7 +25,17 @@ class TasksController < ApplicationController
       render 'new'
     end
   end
-
+  def destroy
+    @task = Task.find(params[:id])
+    @task.destroy
+    if @task.destroy
+      flash[:success] = "Task Deleted Correctly"
+      redirect_to user_path(current_user.id)
+    else
+      flash.now[:error] = "Could not Delete Task"
+      render 'new'
+    end
+  end
 
   private
   #def task_params
