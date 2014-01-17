@@ -4,7 +4,6 @@
 /db/*.sqlite3-journal
 /log/*.log
 *.log
-.idea
 tmp/**/*
 tmp/*
 /tmp
