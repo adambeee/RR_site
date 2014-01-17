@@ -7,7 +7,7 @@
       <li><%= link_to "Contact", contact_path %></li>
       <li><%= link_to "Test", 'http://www.google.com' %></li>
       <% if user_signed_in? %>
-      <li><%= link_to "My Rio Runner", riorunner_path %></li>
+      <li><%= link_to "My Rio Runner", user_path(current_user.id) %></li>
       <% end %>
     </ul>
   </section>

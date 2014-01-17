@@ -12,13 +12,13 @@ class ApplicationController < ActionController::Base
   end
   #this is overriding deviseregistrationcontroller for sign in path and going to the home page of the newly created user.
   def after_sign_in_path_for(resource)
-    session[:requested_url] || riorunner_path
+    session[:requested_url] || user_path(@user) #<= see how you pass in the user to get the id....
   end
   #this is overriding deviseregistrationcontroller for sign out path
   #this is eventually going to want to go to root_path but for sake of testing it is going here..
 
   def after_sign_out_path_for(resource)
-    new_user_session_path
+    root_path
   end
   private
 

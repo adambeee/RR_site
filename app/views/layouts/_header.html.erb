@@ -1,7 +1,15 @@
-<div class ="fixed sticky">
+<div class ="fixed">
 <nav class="top-bar" data-topbar>
         <ul class="title-area">
-          <li class="name"><h1><%=link_to "Rio Runner", root_path %></h1></li>
+          <li class="name">
+            <h1>
+              <% if user_signed_in? %>
+                <%=link_to 'Rio Runner', user_path(current_user.id) %>
+                <% else %>
+                <%=link_to 'Rio Runner', root_path %>
+              <% end %>
+            </h1>
+          </li>
           <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
         </ul>
 
@@ -17,6 +25,10 @@
               <li><a href="#">first link in dropdown</a></li>
               <li><a href="#">second link in dropdown</a></li>
               <li><a href="#">third link in dropdown</a></li>
+            <%= link_to current_user.first_name, user_path(current_user.id)%>
+            <ul class="dropdown">
+              <li> <%= link_to('Logout', destroy_user_session_path, :method => :delete) %></li>
+              <li><%= link_to('My Account', edit_user_registration_path) %></li>
             </ul>
           </li>
           <% else %>

@@ -2,9 +2,9 @@ RRProject::Application.routes.draw do
 
   devise_for :users
   devise_for :admins
+  root 'pages#home'
   resources :users
   resources :tasks
-  root 'pages#home'
 
   get '/contact', :to => 'pages#contact'
   get '/about', :to => 'pages#about'

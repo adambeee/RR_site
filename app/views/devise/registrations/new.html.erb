@@ -2,27 +2,38 @@
 <div class="row">
   <section class="small-12 columns panel callout radius">
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+
+<div class="row">
+  <div class="large-12 columns">
+<%= form_for(resource, :as => resource_name, :html => {"data-abide" => ''}, :url => registration_path(resource_name)) do |f| %>
   <%= devise_error_messages! %>
-<form data-abide>
-  <div class="name-field"><%= f.label :first_name %><small>required</small><br />
-  <%= f.text_field :first_name%><small class="error">Name is required and must be a string.</small></div>
+
+
+
+  <div class="name-field"><%= f.label :first_name %><br />
+  <%= f.text_field :first_name, :autofocus => true, :pattern =>"alpha"%><small class="error">Name is required and must be a string.</small></div>
 
 <div><%= f.label :last_name %><br />
-  <%= f.text_field :last_name%></div>
+  <%= f.text_field :last_name, :pattern =>"alpha"%><small class="error">Name is required and must be a string.</small></div>
 
 <div><%= f.label :phone %><br />
-  <%= f.text_field :phone%></div>
+  <%= f.text_field :phone, :pattern => "integer"%><small class="error">Not a valid phone number</small></div>
 
   <div><%= f.label :email %><br />
-  <%= f.email_field :email, :autofocus => true %></div>
+  <%= f.email_field :email %><small class="error">email is required and must look like adam@riorunner.com.</small></div>
 
   <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
+  <%= f.password_field :password %><small class="error">Password must contain at least 8 characters and an Uppercase Letter</small></div>
 
   <div><%= f.label :password_confirmation %><br />
+<<<<<<< HEAD
   <%= f.password_field :password_confirmation %></div>
   <div><%= f.submit "Sign up", class: "button radius" %></div>
 </form>
 <% end %>
   </section>
+  <%= f.password_field :password_confirmation %><small class="error">Must match above password</small></div>
+  <div><%= f.submit "Sign up", class: "button radius" %></div>
+<% end %>
+  </div>
 </div>

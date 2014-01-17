@@ -9,7 +9,6 @@ gem 'mysql2'
 gem 'foundation-rails'
 gem 'bcrypt-ruby', '3.0.1'
 gem 'protected_attributes'
-#gem 'high_voltage' #for static pages, routes easier
 
 
 group :development, :test do
