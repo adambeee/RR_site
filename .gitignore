@@ -12,3 +12,4 @@ doc/app
 *.swp
 *~
 .DS_Store
+Gemfile.sublime-workspace

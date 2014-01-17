@@ -1,33 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= content_for?(:title) ? yield(:title) : "Rails Bootstrap" %></title>
+    <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Rails Bootstrap" %>">
+    <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
+    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+    <%= csrf_meta_tags %>
+  </head>
 
-  <title><%= @title %></title>
-  <title><%= "Welcome to Rio Runner" %></title>
-  <%= csrf_meta_tag %>
-  <%= stylesheet_link_tag "application", media: "all","data-turbolinks-track" => true %>
-  <%= javascript_include_tag "vendor/modernizr" %>
-  <%= render 'layouts/stylesheets' %>
-</head>
+  <body>
+      <header>
+        <%= render 'layouts/navigation' %>
+      </header>
+      <main role="main">
+        <%= render 'layouts/messages' %>
+        <%= yield %>
+      </main>
+      <%= render 'layouts/footer' %>
 
-<body>
-<div class="row">
-  <div class ="small-12 columns">
-  <%= render 'layouts/header' %>
-  <%= yield %>
-  <%= render 'layouts/footer' %>
-  <%= debug (params) if Rails.env.development? %>
-  </div>
-</div>
-<%= javascript_include_tag "application" %>
-<script src="js/foundation/foundation.js"></script>
-<script src="js/foundation/foundation.topbar.js"></script>
-<!-- Other JS plugins can be included here -->
 
-<script>
-    $(document).foundation();
-</script>
-</body>
+      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+            </div>
+            <div class="modal-body">
+              <h2>Sign in</h2>
+
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+
+  </body>
 </html>
