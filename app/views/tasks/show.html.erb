@@ -1,12 +1,13 @@
 <% provide(:title, @task.description) %>
 <!--classes row and span4 are apart of bootstrap-->
 <div class="row">
-  <aside class="span4">
+  <div class="col-md-8 center">
     <section>
       <h1>
-       Subject: <%= @task.subject %> <br />
-       Description: <%= @task.description %> <!--What happens to this line when I change name to firstname & lastname?-->
+        Subject: <%= @task.subject %> <br />
+        Description: <%= @task.description %> <!--What happens to this line when I change name to firstname & lastname?-->
+
       </h1>
     </section>
-  </aside>
+  </div>
 </div>

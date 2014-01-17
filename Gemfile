@@ -4,9 +4,9 @@ source 'https://rubygems.org'
 gem 'rails', '4.0.0'
 gem 'devise'
 gem 'mysql2'
-#gem 'bootstrap-sass', '2.3.2.0'
-#not using bootstrap anymore but foundation!
-gem 'foundation-rails'
+gem 'sass-rails', '~> 4.0.0'
+gem 'bootstrap-sass', '>= 3.0.0.0'
+#gem 'foundation-rails'
 gem 'bcrypt-ruby', '3.0.1'
 gem 'protected_attributes'
 
@@ -17,7 +17,10 @@ group :development, :test do
   gem 'guard-rspec', '2.5.0'
   gem 'annotate', '2.4.0'
   gem 'factory_girl_rails', '4.2.1'
-  # gem 'twitter-bootstrap-rails'
+  #gem 'better_errors'
+  #gem 'quiet_assets'
+  #gem 'rails_layout'
+  #gem 'binding_of_caller', :platforms=>[:mri_19, :mri_20, :rbx]
 end
 
 group :test do
@@ -31,7 +34,6 @@ group :test do
 end
 
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 4.0.0'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
