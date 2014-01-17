@@ -1,10 +1,14 @@
+<<<<<<< HEAD
 .bundle
 
+=======
+/.bundle
+.idea
+>>>>>>> 6586f86dc1039ebb333b2e19e4155e46ec40775f
 /db/*.sqlite3
 /db/*.sqlite3-journal
 /log/*.log
 *.log
-.idea
 tmp/**/*
 tmp/*
 /tmp
