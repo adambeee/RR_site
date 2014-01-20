@@ -12,7 +12,10 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @tasks = @user.tasks
   end
-
+  def my_rio_runner
+    @user = User.find(params[:id])
+    @tasks = @user.tasks
+  end
   def create
     @user = User.new(params[:user]) # Not the final implementation!
     if @user.save

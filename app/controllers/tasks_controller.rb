@@ -19,7 +19,7 @@ class TasksController < ApplicationController
     @task.user_id = current_user.id
     if @task.save
       flash[:success] = "Task Posted Correctly"
-      redirect_to user_path(current_user.id)
+      redirect_to myriorunner_path(current_user.id)
     else
       flash.now[:error] = "Could not save Task"
       render 'new'
