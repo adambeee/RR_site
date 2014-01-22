@@ -17,4 +17,5 @@ class User < ActiveRecord::Base #ActiveRecord is what Rails use to talk to a Dat
     self.last_name.capitalize!
   end
   has_many :tasks
+  has_many :notifications
 end

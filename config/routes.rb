@@ -5,8 +5,10 @@ RRProject::Application.routes.draw do
   root 'pages#home'
   resources :users do #nests tasks by users
     resources :tasks
+    resources :notifications
   end
   resources :tasks #standard tasks views
+  resources :notifications
 
   get '/contact', :to => 'pages#contact'
   get '/about', :to => 'pages#about'

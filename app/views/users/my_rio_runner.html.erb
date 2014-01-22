@@ -1,5 +1,5 @@
 <div class="row">
-  <div class = "col-md-12 text-center">
+  <div class = "col-md-6 pull-left text-center">
   <H1>My Rio Runner</H1>
   <%= link_to 'See Public Profile', user_path(@user.id), class: "btn btn-primary" %><br /><br />
   <%= gravatar_for @user %> <!--This will pull the usx`ers gravatar using their email address...users_helper.rb-->
@@ -9,6 +9,16 @@
   <br />
   <h4><%= @user.about_me %></h4>
   <br />
+  </div>
+  <div class = "col-md-6 pull-right text-center panel panel-danger">
+    <h1>Listing Notifications</h1>
+
+    <% @user.notifications.each do |notification| %>
+        <tr>
+          <td><%= notification.description %></td>
+          <td><%= link_to "Remove", notification, method: :delete, data: { confirm: "Are you sure?" } %></td>
+        </tr>
+    <% end %>
   </div>
 </div>
 <div class = "row">
