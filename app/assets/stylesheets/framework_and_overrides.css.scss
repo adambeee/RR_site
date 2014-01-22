@@ -112,3 +112,8 @@ html,.row, main {
   top: 11px;
   left: -6px;
 }
+
+tr.row_hover {
+  cursor: pointer;
+  /* whatever other hover styles you want */
+}
