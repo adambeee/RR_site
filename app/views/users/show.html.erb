@@ -1,13 +1,18 @@
-<h1>External Show Page..</h1>
-
 <div class="row">
-  <div class = "col-md-12">
-  <%= gravatar_for @user %> <!--This will pull the usx`ers gravatar using their email address...users_helper.rb-->
-  <h1 class = "text-center">
-    <%= @user.first_name%> <%=  @user.last_name.first[0,1] %>. <!--What happens to this line when I change name to firstname & lastname?-->
-  </h1>
-  <br />
-  <h4><%= @user.about_me %></h4>
-  <br />
+  <div class = "col-xs-12">
+    <%= gravatar_for @user %> <!--This will pull the usx`ers gravatar using their email address...users_helper.rb-->
+    <h1 class = "text-center">
+      <%= @user.first_name%> <%=  @user.last_name.first[0,1] %>. <!--What happens to this line when I change name to firstname & lastname?-->
+    </h1>
+    <div class = "text-center">
+      <ul class = "rating">
+        <% (1..5).each do |i|%>
+            <li class = "rating_star " data-stars = "<%=i%>" data-task-id = "<%= @user.id%>" id = "<%="#{@user.id}_#{i}" %>" ></li>
+        <% end %> (8)
+      </ul>
+    </div>
+    <br />
+    <h4 class = "text-center"><%= @user.about_me %></h4>
+    <br />
   </div>
 </div>

@@ -1,0 +1,20 @@
+<div class = "row">
+  <div class = "col-sm-12 text-center">
+    <h2>You have a new message regarding <a href ="<%=task_path(@task.id) %>">this</a> task from <a href ="<%= user_path(@user.id) %>"><%= @user.first_name %></a></h2>
+    <h1 class = "control-label">From:
+      <%= @user.first_name %>
+    </h1>
+
+    <h1 class = "control-label">Subject:
+      <%= @message.subject %>
+    </h1>
+    <br/>
+    <h1>Body:<br/>
+      <%= @message.body %>
+    </h1>
+    <br/>
+    <%= link_to 'Back', messages_path, class: "pull-left btn btn-primary" %>
+  </div>
+</div>
+
+

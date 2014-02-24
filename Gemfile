@@ -9,6 +9,9 @@ gem 'bootstrap-sass', '>= 3.0.0.0'
 #gem 'foundation-rails'
 gem 'bcrypt-ruby', '3.0.1'
 gem 'protected_attributes'
+gem 'acts-as-taggable-on'
+gem 'bootstrap_tokenfield_rails'
+gem 'haml'
 
 
 group :development, :test do

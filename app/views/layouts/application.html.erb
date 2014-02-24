@@ -5,8 +5,10 @@
     <title><%= content_for?(:title) ? yield(:title) : "Rails Bootstrap" %></title>
     <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Rails Bootstrap" %>">
     <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
     <%= csrf_meta_tags %>
+
   </head>
 
   <body>
@@ -20,29 +22,57 @@
       <%= render 'layouts/footer' %>
 
 
-      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+      <!-- This needs to go into a partial or a helper!!! -->
+      <!-- Modal for Sign in -->
+
+      <div class="modal fade" id="signinmodal" role="dialog" aria-labelledby="signinmodal" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+              <h4 class="modal-title" id="signinmodal">Rio Runner</h4>
             </div>
             <div class="modal-body">
-              <h2>Sign in</h2>
+              <div class = "row">
+                <div class = "col-sm-8">
+                  <h2 class = "text-center">Sign In</h2>
 
+                  <%= form_for(resource, :as => resource_name, html: {class:"form-horizontal", role: "form"}, :url => session_path(resource_name)) do |f|%>
+                      <div class = "form-group">
+                        <%= f.label :email, class: "col-sm-2 control-label"  do %>
+                            <i class="fa fa-envelope fa-fw"></i>
+                        <% end %>
 
+                        <div class = "col-sm-10">
+                          <%= f.email_field :email, :autofocus => true, class: "form-control col-sm-offset-1", placeholder:"Email" %>
+                        </div>
+                      </div>
+                      <div class = "form-group">
+                        <%= f.label :email, class: "col-sm-2 control-label"  do %>
+                            <i class="fa fa-key fa-fw"></i>
+                        <% end %>
+                        <div class = "col-sm-10">
+                          <%= f.password_field :password, class: "form-control col-sm-offset-1", placeholder:"Password" %>
+                        </div>
+                      </div>
+                        <%= f.submit "Sign in", class:"btn btn-primary btn-md span-right col-sm-offset-3"%>
+                      </div>
+                      </div>
+                  <% end %>
+                  </div>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
             </div>
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
+
+      <!-- Modal for Sign in -->
+      <!-- This needs to go into a partial or a helper!!! -->
+
+
       <script>
-          $("tr[data-link]").click(function() {
-              window.location = $(this).data("link")
-          })
+          $('input.tokenize').tokenfield();
       </script>
   </body>
 </html>

@@ -1,16 +1,128 @@
 <% provide(:title, @task.description) %>
-<!--classes row and span4 are apart of bootstrap-->
-<div class="row">
-  <div class="col-md-8 center">
-    <section>
-      <h1>
-        Subject: <%= @task.subject %> <br />
-        Description: <%= @task.description %> <!--What happens to this line when I change name to firstname & lastname?-->
-      </h1>
-      <% if current_user.id == @task.user_id %>
-          <%= link_to 'Destroy', {:controller=>:tasks,:action=>:destroy, :id=>@task},:data => { :confirm => "Are you sure?" }, :method=>:delete %>
-      <% end %>
-    </section>
+<div class = "container">
+  <div class="row">
+    <div class="col-md-8 center">
+      <section>
+        <% @task.tags.any? %>
+        <% @task.tags.each do |tag| %>
+            <%= link_to tag.name, tagged_url(:tag => tag.name) %>
+        <% end %>
+      </section>
+    </div>
+  </div>
+  <div class = "row">
+    <% if current_user.id == @task.user_id %>
+        <%= link_to 'Remove Listing',  {:controller=>:tasks, :action=>:destroy, :id=>@task},:data => { :confirm => "Are you sure?" }, :method=>:delete, class: "button close pull-left" %></td>
+    <%end%>
+  </div>
+  <br/>
+  <div class = "row">
+    <div class = "col-xs-12 clearfix">
+      <table class = "table table-responsive table-condensed">
+        <thead>
+        <tr>
+          <th>Status</th>
+          <th>Subject</th>
+          <th>Description</th>
+          <th>Zip Code</th>
+          <th>Deliverables</th>
+          <td>Review</td>
+          <td>Rating</td>
+
+          <td>Belongs to:</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr data-link = "<%=task_path(@task.id)%>" class ="row_hover">
+          <td class = "text-center"><span class ="glyphicon glyphicon-credit-card"></span></td>
+          <td><%= @task.subject %></td>
+          <td><%= @task.description %></td>
+          <td><%= @task.zipcode %></td>
+          <td><%= @task.deliverables %></td>
+          <% if @task.final_rating.nil? %>
+              <td><%= link_to "Leave Review", "http://www.google.com" %></td>
+          <% else %>
+              <td><%=@task.final_review%></td>
+          <% end %>
+          <td>
+            <ul class = "rating">
+              <% (1..5).each do |i|%>
+                  <li class = "rating_star " data-stars = "<%=i%>" data-task-id = "<%= @task.id%>" id = "<%="#{@task.id}_#{i}" %>" ></li>
+              <% end %>
+            </ul>
+          </td>
+          <td><%= link_to User.find(@task.user_id).first_name, user_path(@task.user.id) %>&nbsp;&nbsp;<a href = "#" data-toggle ="modal" data-target = "#messaging"><i class="fa fa-envelope fa-fw"></i></a></td>
+        </tr>
+        </tbody>
+      </table>
+
+      <%= image_tag("map.png", :class => "img-responsive img-thumbnail") %>
+    </div>
   </div>
 </div>
 
+
+
+<!-- This needs to go into a partial or a helper!!! -->
+<!-- Modal for Messaging -->
+
+<div class="modal fade" id="messaging" role="dialog" aria-labelledby="messaging" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="messaging">Rio Runner</h4>
+      </div>
+      <div class="modal-body">
+        <div class = "row">
+          <div class = "col-sm-10">
+            <h2 class = "text-center">Send Message</h2>
+
+            <%= form_for(@message, html: {class:"form-horizontal", role: "form"}) do |f|%>
+
+                <div class = "form-group">
+                  <div class = "col-sm-10">
+                  <%= f.hidden_field(:recipient_id, :value => @task.user_id)%>
+                </div>
+                </div>
+                <div class = "form-group">
+                  <div class = "col-sm-10">
+                    <%= f.hidden_field(:task_id, :value => @task.id)%>
+                  </div>
+                </div>
+
+                <div class = "form-group">
+                  <%= f.label :subject, class: "col-sm-2 control-label"  do %>
+                      <i class="fa fa-key fa-fw"></i>
+                  <% end %>
+                  <div class = "col-sm-10">
+                    <%= f.text_field :subject, class: "form-control col-sm-offset-1", placeholder:"Subject" %>
+                  </div>
+                </div>
+
+                <div class = "form-group">
+                  <%= f.label :body, class: "col-sm-2 control-label"  do %>
+                      <i class="fa fa-pencil fa-fw"></i>
+                  <% end %>
+                  <div class = "col-sm-10">
+                    <%= f.text_area :body, class:"form-control col-sm-offset-1", placeholder: "Body" %>
+                  </div>
+                </div>
+
+
+
+                <div class = "row">
+                  <%= f.submit "Send Message", class:"btn btn-primary btn-md span-right col-sm-offset-3"%>
+                </div>
+                </div>
+                </div>
+            <% end %>
+            </div>
+    </div>
+  </div>
+</div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- Modal for Messaging -->
+<!-- This needs to go into a partial or a helper!!! -->

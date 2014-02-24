@@ -18,4 +18,5 @@ def uppercase_fields
 end
 has_many :tasks
 has_many :notifications
+has_many :messages, :foreign_key => "recipient_id"
 end

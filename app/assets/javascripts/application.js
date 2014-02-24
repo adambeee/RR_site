@@ -15,3 +15,22 @@
 //= require turbolinks
 //= require bootstrap
 //= require_tree .
+
+$(function() {
+
+    $('.rating_star').click(function() {
+        var star = $(this);
+        var task_id = $(this).attr('data-task-id');
+        var stars = $(this).attr('data-stars');
+
+        for (i = 1; i<= 5; i++){
+            if ( i <= stars){
+                $('#' + task_id + '_' + i).addClass('on');
+            } else{
+                $('#' + task_id + '_' + i).removeClass('on');
+            }
+        }
+
+    });
+
+});

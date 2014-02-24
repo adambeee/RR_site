@@ -1,17 +1,27 @@
-<h2>Sign in</h2>
+<div class = "row panel-callout">
+  <div class = "col-sm-offset-4 col-sm-4">
+        <h2 class = "text-center">Rio Runner</h2>
 
-<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, :autofocus => true %></div>
-
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
-
-  <% if devise_mapping.rememberable? -%>
-    <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
-  <% end -%>
-
-  <div><%= f.submit "Sign in" %></div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+        <%= form_for(resource, :as => resource_name, html: {class:"form-horizontal", role: "form"}, :url => session_path(resource_name)) do |f|%>
+          <div class = "form-group">
+          <%= f.label :email, class: "col-sm-2 control-label" %>
+            <div class = "col-sm-10">
+                <%= f.email_field :email, :autofocus => true, class: "form-control col-sm-offset-1", placeholder:"Email" %>
+            </div>
+          </div>
+        <div class = "form-group">
+          <%= f.label :password, class: "col-sm-2 control-label" %>
+          <div class = "col-sm-10">
+            <%= f.email_field :password, class: "form-control col-sm-offset-1", placeholder:"Password" %>
+          </div>
+        </div>
+          <div class = "row">
+            <div class = "col-sm-6 span-right">
+              <%= render "devise/shared/links" %>
+            </div>
+              <%= f.submit "Sign in", class:"btn btn-primary btn-md span-right"%>
+             </div>
+          </div>
+        <% end %>
+  </div>
+</div>

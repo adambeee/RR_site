@@ -1,14 +1,14 @@
 RRProject::Application.routes.draw do
 
+  resources :messages
+
   devise_for :users
   devise_for :admins
   root 'pages#home'
-  resources :users do #nests tasks by users
-    resources :tasks
-    resources :notifications
-  end
+  resources :users #nests tasks by users
   resources :tasks #standard tasks views
   resources :notifications
+  resources :messages
 
   get '/contact', :to => 'pages#contact'
   get '/about', :to => 'pages#about'
@@ -18,6 +18,11 @@ RRProject::Application.routes.draw do
   get '/users/sign_up', :to => 'devise/registrations#new'
   get '/posttask', :to => 'pages#posttask'
   get '/myriorunner/:id', :to => 'users#my_rio_runner', as: 'myriorunner'
+  get '/mymessages/:id', :to => 'messages#my_messages', as: 'mymessages'
+  get '/mytasks/:id', :to => 'tasks#my_tasks', as: 'mytasks'
+
+
+  #match 'tagged' => 'tasks#tagged', :as => 'tagged'
 
 
 

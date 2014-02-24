@@ -1,0 +1,36 @@
+<H1>My Current Tasks</H1>
+<div class =  "row" id = "tasks">
+  <div class = "col-md-12">
+    <table class = "table table-bordered table-hover">
+      <thead>
+      <tr>
+        <th>Status</th>
+        <th>Subject</th>
+        <th>Description</th>
+        <th>Zip Code</th>
+        <th>Deliverables</th>
+        <th>Tags</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @tasks.each do |task| %>
+          <tr data-link = "<%=task_path(task.id)%>" class ="row_hover">
+            <td><%= task.status %> </td>
+            <td><%= task.subject %></td>
+            <td><%= task.zipcode %></td>
+            <td><%= task.deliverables %></td>
+            <td>Tags when they are ready</td>
+            <td><%= link_to 'Remove Listing',  {:controller=>:tasks, :action=>:destroy, :id=> task.id},:data => { :confirm => "Are you sure?" }, :method=>:delete%></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+    $("tr[data-link]").click(function() {
+        window.location = $(this).data("link")
+    });
+</script>

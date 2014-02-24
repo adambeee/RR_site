@@ -15,7 +15,7 @@ class UsersController < ApplicationController
   def my_rio_runner
     @user = User.find(params[:id])
     @tasks = @user.tasks
-    @notifications = @user.notifications
+    @messages = @user.messages
   end
   def create
     @user = User.new(params[:user]) # Not the final implementation!

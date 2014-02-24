@@ -1,0 +1,32 @@
+<H1>These are my messages!</H1>
+
+<div class =  "row" id = "messages">
+  <div class = "col-md-12">
+    <table class = "table table-bordered table-hover">
+      <thead>
+      <tr>
+        <th>From</th>
+        <th>Task</th>
+        <th>Subject</th>
+        <th>Body</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @messages.each do |message| %>
+          <tr data-link = "<%=message_path(message.id)%>" class ="row_hover">
+            <td><%= User.find(message.sender_id).first_name %> </td>
+            <td><%= message.task_id %></td>
+            <td><%= message.subject %></td>
+            <td><%= message.body %></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+    $("tr[data-link]").click(function() {
+        window.location = $(this).data("link")
+    });
+</script>

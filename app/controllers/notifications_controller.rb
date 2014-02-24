@@ -5,26 +5,27 @@ class TasksController < ApplicationController
   end
 
   def new
-    @notifications = Notification.new
+    @notification = Notification.new
   end
 
   def show
-    @notifications = Notification.find(params[:id])
+    #commenting because of bug when it wants to find notification through tasks.
+    #@notification = Notification.find(params[:id])
 
   end
 
   def create
-    @notifications = Notification.new(task_params)
-    @notifications.user_id = current_user.id
+    @notification = Notification.new(task_params)
+    @notification.user_id = current_user.id
   end
   def destroy
-    @notifications = Notification.find(params[:id])
-    @notifications.destroy
-    if @notifications.destroy
-      flash[:success] = "Task Deleted Correctly"
-      redirect_to user_path(current_user.id)
+    @notification = Notification.find(params[:id])
+    @notification.destroy
+    if @notification.destroy
+      flash[:success] = "Notification Deleted Correctly"
+      redirect_to myriorunner_path(current_user.id)
     else
-      flash.now[:error] = "Could not Delete Task"
+      flash.now[:error] = "Could not Delete Notification"
       render 'new'
     end
   end
@@ -33,9 +34,9 @@ class TasksController < ApplicationController
   #def task_params
   #  params.require(:task).permit(:subject, :description, :deliverables, :duration, :price, :due_date)
   #end
-  def task_params
-    params.require(:task).permit(:user_id, :id, :subject, :description, :deliverables, :zipcode)
-  end
+  #def task_params
+   # params.require(:task).permit(:user_id, :id, :subject, :description, :deliverables, :zipcode)
+  #end
 
 end
 

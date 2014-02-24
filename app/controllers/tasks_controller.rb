@@ -12,9 +12,15 @@ class TasksController < ApplicationController
 
   def show
     @task = Task.find(params[:id])
-  end
+    @message = Message.new
 
+  end
+  def my_tasks
+    @user = User.find(params[:id])
+    @tasks = @user.tasks.all
+  end
   def create
+
     @task = Task.new(task_params)
     @task.user_id = current_user.id
     if @task.save
@@ -30,10 +36,18 @@ class TasksController < ApplicationController
     @task.destroy
     if @task.destroy
       flash[:success] = "Task Deleted Correctly"
-      redirect_to user_path(current_user.id)
+      redirect_to myriorunner_path(current_user.id)
     else
       flash.now[:error] = "Could not Delete Task"
       render 'new'
+    end
+  end
+
+  def tagged
+    if params[:tag].present?
+      @task = Task.tagged_with(params[:tag])
+    else
+      @tasks = Task.postall
     end
   end
 

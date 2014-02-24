@@ -13,7 +13,7 @@
       </thead>
       <tbody>
       <% Task.all.each do |task| %>
-          <tr data-link = "<%=user_task_path(current_user.id, task.id)%>" class ="row_hover">
+          <tr data-link = "<%=task_path(task.id)%>" class ="row_hover">
             <td></td>
             <td><%= task.subject %></td>
             <td><%= task.description %></td>
@@ -25,3 +25,9 @@
     </table>
   </div>
 </div>
+
+<script>
+    $("tr[data-link]").click(function() {
+        window.location = $(this).data("link")
+    });
+</script>

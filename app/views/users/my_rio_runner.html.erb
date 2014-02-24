@@ -1,36 +1,38 @@
-<div class="row">
-  <div class = "col-md-6 pull-left text-center">
-  <H1>My Rio Runner</H1>
-  <%= link_to 'See Public Profile', user_path(@user.id), class: "btn btn-primary" %><br /><br />
-  <%= gravatar_for @user %> <!--This will pull the usx`ers gravatar using their email address...users_helper.rb-->
-  <h1 class = "text-center">
-    Hello, <%= @user.first_name %> <!--What happens to this line when I change name to firstname & lastname?-->
-  </h1>
-  <br />
-  <h4><%= @user.about_me %></h4>
-  <br />
-  </div>
-  <div class = "col-md-6 pull-right text-center panel panel-danger">
-    <h1>Listing Notifications</h1>
-
-    <% @user.notifications.each do |notification| %>
-        <tr>
-          <td><%= notification.description %></td>
-          <td><%= link_to "Remove", notification, method: :delete, data: { confirm: "Are you sure?" } %></td>
-        </tr>
+<div class = "row">
+  <div class = "col-md-3 pull-right">
+    <% if @user.messages.empty? %>
+        <h4>You have no new messages...</h4>
+    <% else %>
+        <h4> You have <a href ="<%= mymessages_path(@user.id) %>"><%= @user.messages.count %></a> new messages</h4>
     <% end %>
   </div>
 </div>
+<div class="row">
+  <div class = "col-md-12 text-center">
+    <H1>My Rio Runner</H1>
+    <%= link_to 'See Public Profile', user_path(@user.id), class: "btn btn-primary" %><br /><br />
+    <%= gravatar_for @user %> <!--This will pull the usx`ers gravatar using their email address...users_helper.rb-->
+    <h1 class = "text-center">
+      Hello, <%= @user.first_name %> <!--What happens to this line when I change name to firstname & lastname?-->
+    </h1>
+    <br />
+    <h4><%= @user.about_me %></h4>
+    <br />
+  </div>
+</div>
+
 <div class = "row">
 
   <div class = "col-md-6 pull-left">
+
+
     <h3>My Tasks</h3>
 
     <% if @user.tasks.empty? %>
         <h4>This user has not posted any tasks...</h4>
     <% else %>
 
-        <table class = "table table-bordered table-hover">
+        <table class = "table table-hover">
           <thead>
           <tr>
             <th>Status</th>
@@ -42,8 +44,8 @@
           </thead>
           <tbody>
           <% @user.tasks.take(5).each do |task| %>
-              <tr data-link = "<%=user_task_path(current_user.id, task.id)%>" class ="row_hover">
-                <td><%= link_to 'view task', user_task_path(current_user.id, task.id) %></td>
+              <tr data-link = "<%=task_path(task.id)%>" class ="row_hover">
+                <td><%= link_to 'view task', task_path(task.id) %></td>
                 <td><%= task.subject %></td>
                 <td><%= task.description %></td>
                 <td><%= task.zipcode %></td>
@@ -54,15 +56,16 @@
         </table>
     <% end %>
     <% if @user.tasks.count > 5 %>
-        <a href ="#" class = "pull-right">View All My Tasks</a>
+        <%= link_to 'View All My Tasks', mytasks_path(@user.id), class: "pull-right"%>
     <% end %>
-    <%= link_to 'Post a Task', new_user_task_path(current_user.id), class: "btn btn-primary pull-left"%>
+    <%= link_to 'Post a Task', new_task_path, class: "btn btn-primary pull-left"%>
   </div>
 
 
   <div class = "col-md-6 pull-right">
     <h3>All Current Tasks</h3>
-    <table class = "table table-bordered table-hover">
+    <br />
+    <table class = "table table-hover">
       <thead>
       <tr>
         <th>Status</th>
@@ -74,8 +77,8 @@
       </thead>
       <tbody>
       <% Task.order('subject').take(5).each do |task| %>
-          <tr data-link = "<%=user_task_path(current_user.id, task.id)%>" class ="row_hover">
-            <td><span class ="glyphicon glyphicon-credit-card text-center"></span></td>
+          <tr data-link = "<%=task_path(task.id)%>" class ="row_hover">
+            <td class = "text-center"><span class ="glyphicon glyphicon-credit-card" rel ="tooltip" title ="tooltip!!"></span></td><!--This has a tooltip-->
             <td><%= task.subject %></td>
             <td><%= task.description %></td>
             <td><%= task.zipcode %></td>
@@ -84,9 +87,20 @@
       <% end %>
       </tbody>
     </table>
-
+    <div class = "pull-right">
     <% if Task.count > 5 %>
         <%= link_to 'List all Tasks' , tasks_path%>
     <% end %>
+    </div>
   </div>
 </div>
+
+<!-- Look at loading tooltips for status of task? -->
+<script>
+    $(document).ready(function(){
+        $("[rel=tooltip]").tooltip({ placement: 'left'});
+    });
+    $("tr[data-link]").click(function() {
+        window.location = $(this).data("link")
+    })
+</script>

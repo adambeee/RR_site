@@ -11,3 +11,33 @@
  *= require_self
  *= require_tree .
  */
+// Star rating stylesheets
+
+.rating {
+  list-style: none;
+  margin-left:-50px ;
+  text-align:center;
+}
+.rating_star, .on {
+  display: inline;
+}
+.rating_star:before {
+  content: "\f005";
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
+  text-decoration: inherit;
+  /*--adjust as necessary--*/
+  color: #D0D1D0;
+  font-size: 18px;
+}
+.on:before{
+  content: "\f005";
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
+  text-decoration: inherit;
+  /*--adjust as necessary--*/
+  color: #FFF00C;
+  font-size: 18px;
+}
