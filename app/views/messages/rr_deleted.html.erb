@@ -1,0 +1,94 @@
+<div class="row">
+  <div class="col-sm-3">
+    <section class="panel">
+      <div class="panel-body">
+        <header class="panel-heading wht-bg">
+          <h4 class="gen-case">My Messages</h4>
+        </header>
+        <ul class="nav nav-pills nav-stacked mail-nav">
+          <li class = "inactive"><%= link_to inbox_path(current_user.id) do %>
+                <% if @unread_messages.exists? %>
+                    <span class="badge small pull-right"><%= @unread_messages.count %></span>
+                <% end %>
+                <i class="fa fa-inbox fa-fw">&nbsp;</i>&nbsp;Inbox
+            <% end %></li>
+          <li class = "inactive"><%= link_to sent_path(current_user.id) do %>
+                <i class="fa fa-envelope fa-fw">&nbsp;</i>&nbsp;Sent Messages
+            <% end %></li>
+          <li class="active"><%= link_to deleted_path(current_user.id) do %>
+                <i class="fa fa-trash-o fa-fw">&nbsp;</i>&nbsp;Deleted
+            <% end %></li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div class="col-sm-9">
+    <section class="panel">
+      <header class="panel-heading wht-bg">
+        <h4 class="gen-case">Deleted Messages
+          <form action="#" class="pull-right mail-src-position">
+            <div class="input-append">
+              <input type="text" class="form-control " placeholder="Search Mail">
+            </div>
+          </form>
+        </h4>
+      </header>
+
+      <div class="panel-body minimal">
+        <div class="mail-option">
+          <%= will_paginate @messages, :class => 'flickr_pagination pull-right' %> </br></br>
+          <div class = "row">
+            <p class = "pull-right"><%= @messages.count %> messages</h4>
+          </div>
+        </div>
+
+        <div class="table-inbox-wrap ">
+          <table class="table table-inbox table-hover table-responsive">
+            <tbody class = "text-center">
+            <thead>
+            <tr>
+              <th>From</th>
+              <th>Subject</th>
+              <th>Date</th>
+              <th>Message Type</th>
+              <th>Message Type</th>
+              <th class = "text-right">Date</th>
+            </tr>
+
+            </thead>
+
+            <% @messages.each do |message| %>
+                <tr data-link = "<%=message_path(message.id)%>" class ="row_hover">
+
+                  <td><%= User.find(message.sender_id).first_name %> </td>
+                  <% if Task.find_by_id(message.task_id) %>
+                      <td><%= Task.find_by_id(message.task_id).subject %></td>
+                  <% else %>
+                      <td>Task Cannot Be Found (Needs to Be Fixed Later)</td>
+                  <% end %>
+
+                  <td><%= message.message_status %></td>
+                  <td><%= message.message_type %></td>
+                  <td><%= message.message_type %></td>
+
+                  <td class="text-right"><% if message.created_at.to_date == Date.today %>
+                        <%= message.created_at.strftime("%I:%M%p") %>
+                    <% else %> <%= message.created_at.strftime("%B %d") %><%end %></td>
+                </tr>
+            <% end %>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+
+<script>
+    $("tr[data-link]").click(function() {
+        window.location = $(this).data("link")
+    });
+</script>

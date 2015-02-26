@@ -1,24 +1,23 @@
 <% provide(:title, @task.description) %>
+<% if @task.status == "in progress" %>
+    <% if @task.notes.where(:status => 'unread').present? %>
+        <span class="badge bg-important"><%= @task.notes.where(:status => 'unread').count %></span>
+    <% end %>
+    <%= link_to task_notes_path(@task) do %>
+        <i class="fa fa-comment fa-3x">&nbsp;</i>&nbsp;
+    <% end %>
+<% end %>
+
 <div class = "container">
-  <div class="row">
-    <div class="col-md-8 center">
-      <section>
-        <% @task.tags.any? %>
-        <% @task.tags.each do |tag| %>
-            <%= link_to tag.name, tagged_url(:tag => tag.name) %>
-        <% end %>
-      </section>
-    </div>
-  </div>
   <div class = "row">
-    <% if current_user.id == @task.user_id %>
-        <%= link_to 'Remove Listing',  {:controller=>:tasks, :action=>:destroy, :id=>@task},:data => { :confirm => "Are you sure?" }, :method=>:delete, class: "button close pull-left" %></td>
-    <%end%>
-  </div>
-  <br/>
-  <div class = "row">
-    <div class = "col-xs-12 clearfix">
-      <table class = "table table-responsive table-condensed">
+    <div class = "col-xs-12">
+      <% if current_user.id == @task.wallet_id%>
+          <% if @task.status == "pending payment" %>
+              <div class = "alert alert-info">Your runner is awaiting your payment information, please provide <%= link_to "payment information", addpaymentinfo_path, :class => "back-btn"  %></div>
+          <% end %>
+      <% end %>
+      <h2>Views: <%= @task.viewcalc %></h2>
+      <table class = "table table-condensed">
         <thead>
         <tr>
           <th>Status</th>
@@ -26,103 +25,95 @@
           <th>Description</th>
           <th>Zip Code</th>
           <th>Deliverables</th>
-          <td>Review</td>
-          <td>Rating</td>
-
-          <td>Belongs to:</td>
+          <% if @task.status != 'open' %>
+              <td>Review</td>
+              <td>Rating</td>
+          <% end %>
+          <% if @task.task_type == 'auto' %>
+              <th>Task Type: Auto</th>
+              <th>Price</th>
+          <% end %>
+          <% if current_user.id == @task.wallet_id %>
+              <td></td>
+              <td></td>
+          <% else %>
+              <td>Belongs to:</td>
+          <% end %>
         </tr>
         </thead>
         <tbody>
         <tr data-link = "<%=task_path(@task.id)%>" class ="row_hover">
-          <td class = "text-center"><span class ="glyphicon glyphicon-credit-card"></span></td>
+          <td class = "text-center"><%= @task.status %></td>
           <td><%= @task.subject %></td>
           <td><%= @task.description %></td>
           <td><%= @task.zipcode %></td>
           <td><%= @task.deliverables %></td>
-          <% if @task.final_rating.nil? %>
-              <td><%= link_to "Leave Review", "http://www.google.com" %></td>
-          <% else %>
-              <td><%=@task.final_review%></td>
-          <% end %>
-          <td>
-            <ul class = "rating">
-              <% (1..5).each do |i|%>
-                  <li class = "rating_star " data-stars = "<%=i%>" data-task-id = "<%= @task.id%>" id = "<%="#{@task.id}_#{i}" %>" ></li>
+          <% if @task.status != 'open' %>
+              <% if @task.final_rating.nil? %>
+                  <td><a href = "#" data-toggle ="modal" data-target = "#review" class = "back-btn-opaque">Leave a Review</a></td>
+              <% else %>
+                  <td><%=@task.final_review%></td>
               <% end %>
-            </ul>
-          </td>
-          <td><%= link_to User.find(@task.user_id).first_name, user_path(@task.user.id) %>&nbsp;&nbsp;<a href = "#" data-toggle ="modal" data-target = "#messaging"><i class="fa fa-envelope fa-fw"></i></a></td>
+              <td>
+                <ul class = "rating">
+                  <% (1..5).each do |i|%>
+                      <li class = "rating_star " data-stars = "<%=i%>" data-task-id = "<%= @task.id%>" id = "<%="#{@task.id}_#{i}" %>" ></li>
+                  <% end %>
+                </ul>
+              </td>
+          <% end %>
+          <% if @task.task_type == 'auto' %>
+              <% if @task.rating_required < @task.average_rating(current_user) && @task.no_ratings_required < current_user.reviews.count%>
+                  <td>This task requires a rating of  <%= @task.rating_required %> with at least <%= @task.no_ratings_required %> reviews.</td>
+
+              <% else %>
+                  <td>Sorry, you can't complete this task! <%=@task.rating_required %> is required and you have <%= @task.average_rating(current_user) %></td>
+                  <td class = "price">$<%=number_with_precision(@task.price * 0.85, :precision => 2) %></td>
+              <% end %>d
+          <% end %>
+          <% if current_user.id == @task.wallet_id %>
+              <td class = "text-center"><%= link_to @task, :method => :delete, :data => {:confirm => "Are you sure?"} do %>
+                    <i class="fa fa-trash-o fa-fw">&nbsp;</i>
+                <% end %></td>
+              <td><%= link_to 'Edit Task', edit_task_path(@task)%></td>
+          <% else %>
+              <td><%= link_to User.find(@task.wallet_id).first_name, user_path(@task.wallet_id) %>&nbsp;&nbsp;<a href = "#" data-toggle ="modal" data-target = "#messaging"><i class="fa fa-pencil-square-o fa-fw"></i></a></td>
+          <% end %>
         </tr>
         </tbody>
       </table>
-
-      <%= image_tag("map.png", :class => "img-responsive img-thumbnail") %>
     </div>
   </div>
 </div>
-
-
-
-<!-- This needs to go into a partial or a helper!!! -->
-<!-- Modal for Messaging -->
-
-<div class="modal fade" id="messaging" role="dialog" aria-labelledby="messaging" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="messaging">Rio Runner</h4>
-      </div>
-      <div class="modal-body">
-        <div class = "row">
-          <div class = "col-sm-10">
-            <h2 class = "text-center">Send Message</h2>
-
-            <%= form_for(@message, html: {class:"form-horizontal", role: "form"}) do |f|%>
-
-                <div class = "form-group">
-                  <div class = "col-sm-10">
-                  <%= f.hidden_field(:recipient_id, :value => @task.user_id)%>
-                </div>
-                </div>
-                <div class = "form-group">
-                  <div class = "col-sm-10">
-                    <%= f.hidden_field(:task_id, :value => @task.id)%>
-                  </div>
-                </div>
-
-                <div class = "form-group">
-                  <%= f.label :subject, class: "col-sm-2 control-label"  do %>
-                      <i class="fa fa-key fa-fw"></i>
-                  <% end %>
-                  <div class = "col-sm-10">
-                    <%= f.text_field :subject, class: "form-control col-sm-offset-1", placeholder:"Subject" %>
-                  </div>
-                </div>
-
-                <div class = "form-group">
-                  <%= f.label :body, class: "col-sm-2 control-label"  do %>
-                      <i class="fa fa-pencil fa-fw"></i>
-                  <% end %>
-                  <div class = "col-sm-10">
-                    <%= f.text_area :body, class:"form-control col-sm-offset-1", placeholder: "Body" %>
-                  </div>
-                </div>
-
-
-
-                <div class = "row">
-                  <%= f.submit "Send Message", class:"btn btn-primary btn-md span-right col-sm-offset-3"%>
-                </div>
-                </div>
-                </div>
-            <% end %>
-            </div>
-    </div>
+<div class ="row">
+  <div class = "col-sm-6">
+    <%= image_tag("map.png", :class => "img-responsive img-thumbnail pull-left") %>
   </div>
-</div><!-- /.modal-content -->
-</div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+  <div class = "col-xs-4 col-xs-offset-2">
+    <% if @task.tags.any? %>
+        Tags:
+        <br />
+        <br />
+        <%= raw @task.tag_list.map{ |t| link_to t, tag_path(t), class: "tag"}.join(' ')%>
+    <% end %>
+    <br />
+    <br />
+    <% if current_user.id != @task.wallet_id %>
+        <% if @task.task_type == "auto" %>
+            <a href = "#" data-toggle ="modal" data-target = "#taskacceptance" class = "back-btn-opaque">This Task Is For Me</a>
+        <% elsif @task.task_type == "bid" %>
+            <a href = "#" data-toggle ="modal" data-target = "#messageinquiry" class = "back-btn-opaque">Bid on this task</a>
+        <% end %>
 
-<!-- Modal for Messaging -->
-<!-- This needs to go into a partial or a helper!!! -->
+    <% end %>
+  </div>
+
+</div>
+<!-- Modals -->
+<%= render 'message_modal' %>
+<%= render 'task_inquiry_modal' %>
+<%= render 'task_acceptance_modal' %>
+<%= render 'review_modal' %>
+
+<!-- Modals -->
+

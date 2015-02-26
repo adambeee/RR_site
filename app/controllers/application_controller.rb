@@ -8,11 +8,15 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:email, :password, :password_confirmation, :first_name, :last_name, :phone, :about_me) }
+    devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:email, :password, :password_confirmation, :first_name, :last_name, :phone, :about_me, :phone) }
+
+    devise_parameter_sanitizer.for(:account_update) do |u|
+      u.permit(:first_name, :last_name, :username, :email, :password, :password_confirmation, :avatar, :phone, :about_me)
+    end
   end
   #this is overriding deviseregistrationcontroller for sign in path and going to the home page of the newly created user.
   def after_sign_in_path_for(resource)
-    session[:requested_url] || myriorunner_path(@user) #<= see how you pass in the user to get the id....
+    session[:requested_url] || myriorunner_path(current_user.id)#<= see how you pass in the user to get the id....
   end
   #this is overriding deviseregistrationcontroller for sign out path
   #this is eventually going to want to go to root_path but for sake of testing it is going here..
@@ -26,5 +30,5 @@ class ApplicationController < ActionController::Base
     #stores last url as long as its not in /users path
     session[:previous_url] = request.fullpath unless request.fullpath =~ /\/users/
   end
-
 end
+

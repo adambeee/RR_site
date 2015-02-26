@@ -1,20 +1,130 @@
-<div class = "row">
-  <div class = "col-sm-12 text-center">
-    <h2>You have a new message regarding <a href ="<%=task_path(@task.id) %>">this</a> task from <a href ="<%= user_path(@user.id) %>"><%= @user.first_name %></a></h2>
-    <h1 class = "control-label">From:
-      <%= @user.first_name %>
-    </h1>
 
-    <h1 class = "control-label">Subject:
-      <%= @message.subject %>
-    </h1>
-    <br/>
-    <h1>Body:<br/>
-      <%= @message.body %>
-    </h1>
-    <br/>
-    <%= link_to 'Back', messages_path, class: "pull-left btn btn-primary" %>
+
+<div class="row">
+  <div class="col-sm-3">
+    <section class="panel">
+      <div class="panel-body">
+        <header class="panel-heading wht-bg">
+          <h4 class="gen-case">My Messages</h4>
+        </header>
+        <ul class="nav nav-pills nav-stacked mail-nav">
+          <li class = "inactive"><%= link_to inbox_path(current_user.id) do %>
+                <% if @unread_messages.exists? %>
+                    <span class="badge small pull-right"><%= @unread_messages.count %></span>
+                <% end %>
+                <i class="fa fa-inbox fa-fw">&nbsp;</i>&nbsp;Inbox
+            <% end %></li>
+          <li class = "inactive"><%= link_to sent_path(current_user.id) do %>
+                <i class="fa fa-envelope fa-fw">&nbsp;</i>&nbsp;Sent Messages
+            <% end %></li>
+          <li class = "inactive"><%= link_to deleted_path(current_user.id) do %>
+                <i class="fa fa-trash-o fa-fw">&nbsp;</i>&nbsp;Deleted
+            <% end %></li>
+        </ul>
+      </div>
+    </section>
+  </div>
+  <div class="col-sm-9">
+    <section class="panel">
+      <header class="panel-heading wht-bg">
+        <h4 class="gen-case"> View Message
+          <form action="#" class="pull-right mail-src-position">
+            <div class="input-append">
+              <input type="text" class="form-control " placeholder="Search Mail">
+            </div>
+          </form>
+        </h4>
+      </header>
+      <div class="panel-body ">
+
+        <div class="mail-header row">
+          <div class="col-md-8">
+            <h4 class="pull-left"> <%= @message.subject %>.</h4>
+          </div>
+
+        </div>
+        <div class="mail-sender">
+          <div class="row">
+            <div class="col-md-8">
+              <%= link_to user_path(@user.id) do %>
+                  <%= image_tag("avatar1_small.jpg", :class => "pull-left") %>
+                  <strong>&nbsp;<%= @user.first_name%>&nbsp;<%= @user.last_initial %></strong>
+
+              <% end %>
+
+              to
+              <strong>me</strong>
+            </div>
+            <div class="col-md-4">
+              <p class="date"><%= @message.created_at.strftime("%A, %B %d, %Y at %I:%M %p")%></p>
+            </div>
+          </div>
+        </div>
+        <div class="view-mail">
+          <p><%= @message.body.html_safe %></p>
+          <% if @message.message_type == "inquiry" %>
+              <hr>
+              <h2>Until we can figure out formatting...</h2>
+              <h3>
+                <%= @message.body %>
+                <br>
+                <%=link_to User.find(@message.sender_id).first_name, user_path(@message.sender_id) %> wants to complete your task for $<%= @message.wallet_price %> (maybe have a tooltip on how this is calculated)
+              </h3>
+              <a href = "#" class = "pull-left back-btn" data-toggle ="modal" data-target = "#messaging">Decline Offer</a>
+              <%= link_to 'Accept Offer', taskconfirmation_path(@message) , class: "pull-right back-btn" %>
+          <% end %>
+        </div>
+        <div class="attachment-mail">
+          <p>
+            <span><i class="fa fa-paperclip"></i> 2 attachments — </span>
+            <a href="#">Download all attachments</a>
+            |
+            <a href="#">View all images</a>
+          </p>
+          <ul>
+            <li>
+              <a class="atch-thumb" href="#">
+                <img src="images/product_img.png">
+              </a>
+
+              <a class="name" href="#">
+                IMG_001.jpg
+                <span>20KB</span>
+              </a>
+
+              <div class="links">
+                <a href="#">View</a> -
+                <a href="#">Download</a>
+              </div>
+            </li>
+
+            <li>
+              <a class="atch-thumb" href="#">
+                <img src="images/weather_image.jpg">
+              </a>
+
+              <a class="name" href="#">
+                IMG_001.jpg
+                <span>20KB</span>
+              </a>
+
+              <div class="links">
+                <a href="#">View</a> -
+                <a href="#">Download</a>
+              </div>
+            </li>
+
+          </ul>
+        </div>
+        <div class="compose-btn pull-left">
+          <a href="mail_compose.html" class="btn btn-sm btn-primary" ><i class="fa fa-reply"></i> Reply</a>
+          <button class="btn  btn-sm tooltips" data-original-title="Print" type="button" data-toggle="tooltip" data-placement="top" title=""><i class="fa fa-print"></i> </button>
+          <button class="btn btn-sm tooltips" data-original-title="Trash" data-toggle="tooltip" data-placement="top" title=""><i class="fa fa-trash-o"></i></button>
+        </div>
+      </div>
+    </section>
   </div>
 </div>
 
 
+<%= render 'message_modal' %>

@@ -1,0 +1,2 @@
+page.insert_html :bottom, :tasks, :partial => 'tasksgrid'
+page.call 'checkScroll' if @tasks.total_pages > @tasks.current_page

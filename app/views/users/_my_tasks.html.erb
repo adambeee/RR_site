@@ -1,0 +1,30 @@
+<% if @user.tasks.empty? %>
+    <h4>This user has not posted any tasks...</h4>
+<% else %>
+    <table class = "table table-hover">
+      <thead>
+      <tr>
+        <th>Status</th>
+        <th>Subject</th>
+        <th>Description</th>
+        <th>Zip Code</th>
+        <th>Deliverables</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @user.tasks.take(5).each do |task| %>
+          <tr data-link = "<%=task_path(task.id)%>" class ="row_hover">
+            <td class = "text-center"><span class ="glyphicon glyphicon-credit-card" rel ="tooltip" title ="tooltip!!"></span></td><!--This has a tooltip-->
+            <td><%= task.subject %></td>
+            <td><%= task.description %></td>
+            <td><%= task.zipcode %></td>
+            <td><%= task.deliverables %></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+<% end %>
+<% if @user.tasks.count > 5 %>
+    <%= link_to 'View All My Tasks', mytasks_path(@user.id), class: "pull-right"%>
+<% end %>
+<%= link_to 'Post a Task', new_task_path, class: "btn btn-embossed btn-primary pull-left"%>

@@ -1,6 +1,7 @@
 class MessagesController < ApplicationController
   before_action :set_message, only: [:show, :edit, :update, :destroy]
   before_filter :authenticate_user!
+
   # GET /messages
   # GET /messages.json
   def index
@@ -10,11 +11,68 @@ class MessagesController < ApplicationController
     @user = User.find(params[:id])
     @messages = @user.messages.all
   end
-  # GET /messages/1
-  # GET /messages/1.json
-  def show
+  def rr_inbox
+    @user = User.find(params[:id])
+    @messages = @user.messages.where(:recipient_id => current_user.id, :message_status => ['unread', 'read']).paginate(:per_page => 10, :page => params[:page])
+    @unread_messages = current_user.messages.where(:message_status => 'unread')
+  end
+  def rr_sent
+    @user = User.find(params[:id])
+    @messages = Message.where(:sender_id => current_user.id, :message_type => 'message').paginate(:per_page => 10, :page => params[:page])
+    @unread_messages = current_user.messages.where(:message_status => 'unread')
+  end
+  def rr_deleted
+    @user = User.find(params[:id])
+    @messages = @user.messages.where(:recipient_id => current_user.id, :message_status => 'deleted').paginate(:per_page => 10, :page => params[:page])
+    @unread_messages = current_user.messages.where(:message_status => 'unread')
+  end
+
+  def markasdeleted
+    @message = Message.find(params[:id])
+    @message.update_attribute(:message_status, "deleted")
+    redirect_to mymessages_path(current_user)
+  end
+
+  def taskconfirmation
+    @message = Message.find(params[:id])
     @user = User.find(@message.sender_id)
     @task = Task.find(@message.task_id)
+    if @task.status == "open"
+      @task.update_attributes(:price => @message.proposed_price, :status => "pending payment", :runner_id => @message.sender_id)
+      redirect_to task_path(@task)
+      if @task.save
+        flash[:notice] = "Runner Notified"
+        Message.create(:sender_id => current_user.id, :recipient_id => @user.id, :subject => "congrats, you are now the runner",
+        :body => "wait for contact from the seller, congrats", :task_id => @task.id, :message_type => "confimation")
+      end
+    else
+      redirect_to inbox_path(current_user)
+      flash[:error] = "Something went wrong"
+    end
+  end
+
+  def show
+    @message = Message.find(params[:id])
+    @unread_messages = current_user.messages.where(:message_status => 'unread')
+    if current_user.id == @message.sender_id || current_user.id == @message.recipient_id #makes sure people can't read other messages and be cute
+      @user = User.find(@message.sender_id)
+      @task = Task.find(@message.task_id)
+      @message.update_attribute(:message_status, "read")
+    else
+      flash[:error] = "Invalid Page"
+      redirect_to root_path
+    end
+  end
+
+    #Working with mailboxes for messages
+  def inbox
+
+  end
+  def sent
+
+  end
+  def deleted
+
   end
 
   # GET /messages/new
@@ -59,10 +117,12 @@ class MessagesController < ApplicationController
 
   # DELETE /messages/1
   # DELETE /messages/1.json
+
+
   def destroy
     @message.destroy
     respond_to do |format|
-      format.html { redirect_to messages_url }
+      format.html { redirect_to mymessages_path(current_user.id) }
       format.json { head :no_content }
     end
   end
@@ -73,7 +133,8 @@ class MessagesController < ApplicationController
       @message = Message.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+    # Never trust parameters from the scary internet, only a
+    # llow the white list through.
     def message_params
       params[:message]
     end

@@ -1,0 +1,24 @@
+Here is me adding payment information!!
+
+Maybe instead of redirecting to a certain page, we can have a modal form for just payment information. Kind of like a digital credit card that accepts payment
+sends a user to braintree and then invokes another controller action changing status and etc.
+
+<a href = "http://kenkeiter.com/skeuocard/">Something like this</a>
+<a href = "https://github.com/rougecardinal/skeuocard-rails" class = "back-btn-opaque">There is even a gem!</a>
+<br/><br/>
+Maybe even have a modal on the first page with just the form? Less redirects? <br/><br/>
+
+<hr>
+There is going to be a form here for: <br/>
+
+Name on Card: <br/>
+
+Card number <br/>
+Exp Date <br/>
+cvv <br/>
+<br/>
+Also you are authorizing payment of: <div class = "price">$<%= number_with_precision(@task.price, :precision => 2) %></div>
+<br/>
+<br/>
+<hr>
+<%= link_to "submit",taskcompletion_path(@task), :class => "back-btn-opaque" %>

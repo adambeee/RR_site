@@ -1,5 +1,8 @@
 RRProject::Application.configure do
+
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {:address => "localhost", :port => 1025}
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded on
@@ -27,4 +30,13 @@ RRProject::Application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
+
+  config.paperclip_defaults = {
+      :storage => :s3,
+      :s3_credentials => {
+          :bucket => ENV['riorunner'],
+          :access_key_id => ENV['AKIAIYFSMIESFE7CQUYA'],
+          :secret_access_key => ENV['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']
+      }
+  }
 end

@@ -1,0 +1,41 @@
+<%= link_to "Back to Task", task_path(@task) %>
+
+
+To make notes/show to not be marked as unread, look at putting an index action that changes the attributes on just the recipient id in a for or a do loop.
+<div class = "row">
+  <div class = "col-xs-12">
+    <h1 class = "text-center"><%= @task.subject %></h1>
+  </div>
+</div>
+<% @otherusernotes.each do |note| %>
+    <div class = "row">
+        <div class = "col-xs-6 pull-right">
+          <% if User.find(note.recipient_id).image_url.present? %>
+              <%= image_tag(User.find(note.recipient_id).image_url, :class => "pull-left img-circle notepic") %>
+          <% elsif User.find(note.recipient_id).avatar_file_name.present? %>
+              <%= image_tag User.find(note.recipient_id).avatar.url(:square) %>
+          <% else %>
+              <%= image_tag("avatar1_small.jpg", :class => "pull-left img-circle notepic") %> &nbsp;
+          <% end %>
+              <%= note.body %>
+              <br/>
+        </div>
+    </div>
+<% end %>
+<% @mynotes.each do |note| %>
+    <div class = "row">
+        <div class = "col-xs-6 pull-left">
+          <% if current_user.image_url.present? %>
+              <%= image_tag(current_user.image_url, :class => "pull-left img-circle notepic") %>
+          <% elsif current_user.avatar_file_name.present? %>
+              <%= image_tag current_user.avatar.url(:square) %>
+          <% else %>
+              <%= image_tag("avatar1_small.jpg", :class => "pull-left img-circle notepic") %> &nbsp;
+          <% end %>
+          <%= note.body %>
+          <br/>
+         </div>
+    </div>
+<% end %>
+
+<%= link_to 'New Note', new_task_note_path %>

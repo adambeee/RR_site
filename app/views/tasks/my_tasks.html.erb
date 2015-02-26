@@ -18,10 +18,13 @@
           <tr data-link = "<%=task_path(task.id)%>" class ="row_hover">
             <td><%= task.status %> </td>
             <td><%= task.subject %></td>
+            <td><%= task.description %></td>
             <td><%= task.zipcode %></td>
             <td><%= task.deliverables %></td>
             <td>Tags when they are ready</td>
-            <td><%= link_to 'Remove Listing',  {:controller=>:tasks, :action=>:destroy, :id=> task.id},:data => { :confirm => "Are you sure?" }, :method=>:delete%></td>
+            <td class = "text-center"><%= link_to task, :method => :delete, :data => {:confirm => "Are you sure?"} do %>
+                  <i class="fa fa-trash-o fa-fw">&nbsp;</i>
+              <% end %></td>
           </tr>
       <% end %>
       </tbody>
@@ -34,3 +37,4 @@
         window.location = $(this).data("link")
     });
 </script>
+

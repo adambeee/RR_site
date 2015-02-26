@@ -6,6 +6,7 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, Rails.env)
 
+
 module RRProject
   class Application < Rails::Application
     config.active_record.whitelist_attributes = false # THis fixes the mass assignment issue with Rails 4 and devise.
@@ -21,5 +22,6 @@ module RRProject
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
     config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
+    config.assets.paths << Rails.root.join("app", "assets", "fonts")
   end
 end

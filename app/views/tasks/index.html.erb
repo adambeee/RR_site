@@ -1,33 +1,20 @@
-<h1>View All Current Tasks</h1>
-<div class =  "row" id = "tasks">
-  <div class = "col-md-12">
-    <table class = "table table-bordered table-hover">
-      <thead>
-      <tr>
-        <th>Status</th>
-        <th>Subject</th>
-        <th>Description</th>
-        <th>Zip Code</th>
-        <th>Deliverables</th>
-      </tr>
-      </thead>
-      <tbody>
-      <% Task.all.each do |task| %>
-          <tr data-link = "<%=task_path(task.id)%>" class ="row_hover">
-            <td></td>
-            <td><%= task.subject %></td>
-            <td><%= task.description %></td>
-            <td><%= task.zipcode %></td>
-            <td><%= task.deliverables %></td>
-          </tr>
-      <% end %>
-      </tbody>
-    </table>
-  </div>
+<div class = "row">
+   <div class = "tag_cloud col-sm-12">
+         <h2>This is going to be a search</h2>
+         <%= link_to "all jobs", task_path(@task), class: "tag" %>
+         <% tag_cloud Task.tag_counts.sort_by(&:count).reverse, %w[s m l] do |tag, css_class| %>
+             <%= link_to tag.name, tag_path(tag.name), class: "tag"  %>
+         <% end %>
+   </div>
 </div>
+<%= render 'tasksgrid' %>
+  <div class = "col-md-12">
+    <br/>
+    <br/>
+  </div>
 
-<script>
-    $("tr[data-link]").click(function() {
-        window.location = $(this).data("link")
-    });
-</script>
+
+
+
+
+

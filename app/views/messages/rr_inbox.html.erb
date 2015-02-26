@@ -1,0 +1,128 @@
+<div class="row">
+<div class="col-sm-3">
+  <section class="panel">
+    <div class="panel-body">
+      <header class="panel-heading wht-bg">
+      <h4 class="gen-case">My Messages</h4>
+      </header>
+      <ul class="nav nav-pills nav-stacked mail-nav">
+        <li class="active"><%= link_to inbox_path(current_user.id) do %>
+              <% if @unread_messages.exists? %>
+                  <span class="badge small pull-right"><%= @unread_messages.count %></span>
+              <% end %>
+            <i class="fa fa-inbox fa-fw">&nbsp;</i>&nbsp;Inbox
+        <% end %></li>
+        <li class = "inactive"><%= link_to sent_path(current_user.id) do %>
+              <i class="fa fa-envelope fa-fw">&nbsp;</i>&nbsp;Sent Messages
+          <% end %></li>
+        <li class = "inactive"><%= link_to deleted_path(current_user.id) do %>
+              <i class="fa fa-trash-o fa-fw">&nbsp;</i>&nbsp;Deleted
+          <% end %></li>
+      </ul>
+    </div>
+  </section>
+</div>
+
+<div class="col-sm-9">
+<section class="panel">
+<header class="panel-heading wht-bg">
+  <h4 class="gen-case">Inbox (<%= @unread_messages.count %>)
+    <form action="#" class="pull-right mail-src-position">
+      <div class="input-append">
+        <input type="text" class="form-control " placeholder="Search Mail">
+      </div>
+    </form>
+  </h4>
+</header>
+
+<div class="panel-body minimal">
+<div class="mail-option">
+    <%= will_paginate @messages, :class => 'flickr_pagination pull-right' %> </br></br>
+    <div class = "row">
+      <p class = "pull-right"><%= @messages.count %> messages</h4>
+    </div>
+</div>
+
+  <div class="table-inbox-wrap ">
+    <table class="table table-inbox table-hover table-responsive">
+      <tbody class = "text-center">
+<thead>
+<tr>
+  <th>Subject</th>
+  <th>Message Status</th>
+  <th>Message Type</th>
+  <th>Message Type</th>
+  <th class = "text-right">Date</th>
+</tr>
+
+</thead>
+
+<% @messages.each do |message| %>
+    <tr data-link = "<%=message_path(message.id)%>" class ="row_hover <% if message.message_status == "unread" %>unread <%else%>read<% end %>">
+
+        <% if Task.find_by_id(message.task_id) %>
+            <td><%= Task.find_by_id(message.task_id).subject %></td>
+        <% else %>
+            <td>Task Cannot Be Found (Needs to Be Fixed Later)</td>
+        <% end %>
+
+        <td><% if message.message_status == "unread" %><span class="label label-danger"><%= message.message_status %></span><% else %><%= message.message_status %><%end%></td>
+        <td><%= message.message_type %></td>
+        <td><%= message.message_type %></td>
+
+        <td class="text-right"><% if message.created_at.to_date == Date.today %>
+              <%= message.created_at.strftime("%I:%M%p") %>
+          <% else %> <%= message.created_at.strftime("%B %d") %><%end %></td>
+    </tr>
+<% end %>
+
+
+
+
+
+<tr class="unread">
+  <td class="inbox-small-cells">
+    <input type="checkbox" class="mail-checkbox">
+  </td>
+  <td class="inbox-small-cells"><i class="fa fa-star"></i></td>
+  <td class="view-message  dont-show"><a href="mail_view.html">ABC Company</a></td>
+  <td class="view-message "><a href="mail_view.html">Lorem ipsum dolor imit set.</a></td>
+  <td class="view-message  inbox-small-cells"><i class="fa fa-paperclip"></i></td>
+  <td class="view-message  text-right">12.10 AM</td>
+</tr>
+
+<tr class="">
+  <td class="inbox-small-cells">
+    <input type="checkbox" class="mail-checkbox">
+  </td>
+  <td class="inbox-small-cells"><i class="fa fa-star"></i></td>
+  <td class="view-message dont-show">Facebook <span class="label label-info pull-right">family</span></td>
+  <td class="view-message view-message">Dolor sit amet, consectetuer adipiscing</td>
+  <td class="view-message inbox-small-cells"></td>
+  <td class="view-message text-right">March 24</td>
+</tr>
+<tr class="">
+  <td class="inbox-small-cells">
+    <input type="checkbox" class="mail-checkbox">
+  </td>
+  <td class="inbox-small-cells"><i class="fa fa-star inbox-started"></i></td>
+  <td class="view-message dont-show">Mogli Marion</td>
+  <td class="view-message">Lorem ipsum dolor sit amet</td>
+  <td class="view-message inbox-small-cells"></td>
+  <td class="view-message text-right">February 09</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</section>
+</div>
+</div>
+
+
+<script>
+    $("tr[data-link]").click(function() {
+        window.location = $(this).data("link")
+    });
+</script>

@@ -5,40 +5,86 @@
     <title><%= content_for?(:title) ? yield(:title) : "Rails Bootstrap" %></title>
     <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Rails Bootstrap" %>">
     <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
-    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
-    <%= csrf_meta_tags %>
+    <%= stylesheet_link_tag "bootstrap-reset", media: "all", "data-turbolinks-track" => true %>
+    <%= stylesheet_link_tag "framework_and_overrides", media: "all", "data-turbolinks-track" => true %>
+    <%= stylesheet_link_tag "scaffolds", "clndr", media: "all", "data-turbolinks-track" => true %>
+    <%= stylesheet_link_tag "font-awesome", media: "all", "data-turbolinks-track" => true %>
+    <%= stylesheet_link_tag "style", media: "all", "data-turbolinks-track" => true %>
+    <%= stylesheet_link_tag "style-responsive", media: "all", "data-turbolinks-track" => true %>
 
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+    <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js'></script>
+    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/themes/start/jquery-ui.css" />
+
+    <%= javascript_include_tag "application", "data-turbolinks-track" => false %>
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <%= csrf_meta_tags %>
   </head>
 
   <body>
-      <header>
+    <section id = "container">
+      <header class="header fixed-top clearfix">
         <%= render 'layouts/navigation' %>
       </header>
       <main role="main">
-        <%= render 'layouts/messages' %>
-        <%= yield %>
+        <!--main content start-->
+        <section id="main-content">
+          <section class="wrapper">
+            <!-- page start-->
+            <%= render 'layouts/messages' %>
+            <%= yield %>
+            <!-- page end-->
+          </section>
+        </section>
       </main>
+      <!--
       <%= render 'layouts/footer' %>
+      -->
+    </section>
 
 
 
-      <!-- This needs to go into a partial or a helper!!! -->
-      <!-- Modal for Sign in -->
+
 
       <div class="modal fade" id="signinmodal" role="dialog" aria-labelledby="signinmodal" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title" id="signinmodal">Rio Runner</h4>
+              <h4 class="modal-title" id="signinmodal">Rio Runner - Sign In</h4>
             </div>
             <div class="modal-body">
               <div class = "row">
                 <div class = "col-sm-8">
-                  <h2 class = "text-center">Sign In</h2>
-
                   <%= form_for(resource, :as => resource_name, html: {class:"form-horizontal", role: "form"}, :url => session_path(resource_name)) do |f|%>
+
+                      <div class = "form-group">
+                        <%= f.label :email, class: "col-sm-2 control-label"  do %>
+                            <i class="fa fa-facebook fa-fw"></i>
+                        <% end %>
+
+                        <div class = "col-sm-10">
+                          <a href = "/auth/facebook" class = " form-control col-sm-offset-1 btn-primary" >Log in with Facebook</a>
+                        </div>
+                      </div>
+
+                      <div class = "form-group">
+                        <%= f.label :email, class: "col-sm-2 control-label"  do %>
+                            <i class="fa fa-twitter fa-fw"></i>
+                        <% end %>
+
+                        <div class = "col-sm-10">
+                          <a href ="/auth/twitter" class = " form-control col-sm-offset-1 btn-primary">Log in with Twitter</a>
+                        </div>
+                      </div>
+
+                      or with...
+
                       <div class = "form-group">
                         <%= f.label :email, class: "col-sm-2 control-label"  do %>
                             <i class="fa fa-envelope fa-fw"></i>
@@ -56,23 +102,16 @@
                           <%= f.password_field :password, class: "form-control col-sm-offset-1", placeholder:"Password" %>
                         </div>
                       </div>
-                        <%= f.submit "Sign in", class:"btn btn-primary btn-md span-right col-sm-offset-3"%>
+                      <%= f.submit "Sign in", class:"btn btn-primary btn-md span-right col-sm-offset-3"%>
                       </div>
                       </div>
                   <% end %>
+
                   </div>
-            </div>
-            </div>
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
+          </div>
+        </div>
+      </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
-
-      <!-- Modal for Sign in -->
-      <!-- This needs to go into a partial or a helper!!! -->
-
-
-      <script>
-          $('input.tokenize').tokenfield();
-      </script>
   </body>
 </html>

@@ -1,0 +1,27 @@
+<div class="modal fade" id="taskacceptance" role="dialog" aria-labelledby="taskacceptance" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="taskacceptance">Rio Runner</h4>
+      </div>
+      <div class="modal-body">
+        <div class = "row">
+          <div class = "col-sm-10">
+            <h2 class = "text-center">Accept Task</h2>
+
+                <div class = "row">
+                  <div class = "col-xs-9 col-xs-offset-3">
+                    <p>These are rio runner terms and conditions. You must agree here, blah blah blah. Have a checkbox below to check.</p>
+                  </div>
+                </div>
+
+                <div class = "row">
+                     <%= link_to 'Do Task', update_autotask_with_runner_path(@task), class:"back-btn pull-right col-sm-offset-3"%>
+                </div>
+                </div>
+                </div>
+            </div>
+</div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

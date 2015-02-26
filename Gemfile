@@ -9,10 +9,20 @@ gem 'bootstrap-sass', '>= 3.0.0.0'
 #gem 'foundation-rails'
 gem 'bcrypt-ruby', '3.0.1'
 gem 'protected_attributes'
-gem 'acts-as-taggable-on'
 gem 'bootstrap_tokenfield_rails'
 gem 'haml'
-
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'omniauth-twitter'
+gem 'omniauth-linkedin'
+gem 'will_paginate', '~> 3.0' ## Gemfile for Rails 3, Rails 4, Sinatra, and Merb
+#gem 'sunspot_rails'
+gem 'font-awesome-rails'
+gem 'jquery-turbolinks'
+gem 'acts-as-taggable-on'
+gem 'paperclip'
+gem 'aws-sdk'
+gem 'simple_form'
 
 group :development, :test do
 # Use mysql as the database for Active Record
@@ -20,10 +30,11 @@ group :development, :test do
   gem 'guard-rspec', '2.5.0'
   gem 'annotate', '2.4.0'
   gem 'factory_girl_rails', '4.2.1'
-  #gem 'better_errors'
+  #gem 'sunspot_solr'
   #gem 'quiet_assets'
   #gem 'rails_layout'
   #gem 'binding_of_caller', :platforms=>[:mri_19, :mri_20, :rbx]
+  gem 'mailcatcher'
 end
 
 group :test do
